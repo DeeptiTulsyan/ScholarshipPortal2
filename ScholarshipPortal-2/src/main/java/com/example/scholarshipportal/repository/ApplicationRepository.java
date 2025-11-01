@@ -3,6 +3,8 @@ package com.example.scholarshipportal.repository;
 import com.example.scholarshipportal.model.Application;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -14,6 +16,8 @@ public class ApplicationRepository {
 
     @Autowired
     private DataSource dataSource;
+
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationRepository.class);
 
     public void save(Application app) {
         String sql = "INSERT INTO applications (student_name, student_email, scholarship_id, scholarship_name, status) VALUES (?, ?, ?, ?, ?)";
@@ -27,14 +31,17 @@ public class ApplicationRepository {
             stmt.setString(5, app.getStatus());
             stmt.executeUpdate();
 
+            logger.info("Application saved successfully for student: {}", app.getStudentEmail());
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error while saving application for student: {}", app.getStudentEmail(), e);
         }
     }
 
     public List<Application> findByStudentEmail(String email) {
         List<Application> list = new ArrayList<>();
         String sql = "SELECT * FROM applications WHERE student_email = ?";
+
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -52,9 +59,12 @@ public class ApplicationRepository {
                 list.add(app);
             }
 
+            logger.info("Fetched {} applications for email: {}", list.size(), email);
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error fetching applications for email: {}", email, e);
         }
+
         return list;
     }
 }

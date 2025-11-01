@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error | Scholarship Portal</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom right, #e3f2fd, #bbdefb);
+            color: #0d47a1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .error-container {
+            background-color: #ffffff;
+            padding: 40px 60px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #1565c0;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #1a237e;
+            margin-bottom: 30px;
+        }
+
+        a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #1976d2;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #0d47a1;
+        }
+
+        .error-code {
+            font-size: 5rem;
+            color: #64b5f6;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="error-container">
+    <div class="error-code">⚠️</div>
+    <h1>Oops! Something went wrong</h1>
+    <p th:text="${errorMessage}">An unexpected error occurred. Please try again later.</p>
+    <a th:href="@{/}">Back to Home</a>
+</div>
+</body>
+</html>

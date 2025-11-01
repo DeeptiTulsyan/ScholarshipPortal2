@@ -3,6 +3,8 @@ package com.example.scholarshipportal.repository;
 import com.example.scholarshipportal.model.Scholarship;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -14,6 +16,8 @@ public class ScholarshipRepository {
 
     @Autowired
     private DataSource dataSource;
+
+    private static final Logger logger = LoggerFactory.getLogger(ScholarshipRepository.class);
 
     public List<Scholarship> findAll() {
         List<Scholarship> scholarships = new ArrayList<>();
@@ -31,9 +35,12 @@ public class ScholarshipRepository {
                 scholarships.add(s);
             }
 
+            logger.info("Fetched {} scholarships successfully.", scholarships.size());
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error fetching scholarships from database.", e);
         }
+
         return scholarships;
     }
 
@@ -52,11 +59,15 @@ public class ScholarshipRepository {
                 scholarship.setId(rs.getInt("id"));
                 scholarship.setName(rs.getString("name"));
                 scholarship.setDescription(rs.getString("description"));
+                logger.info("Scholarship found with ID: {}", id);
+            } else {
+                logger.warn("No scholarship found with ID: {}", id);
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error fetching scholarship with ID: {}", id, e);
         }
+
         return scholarship;
     }
 }

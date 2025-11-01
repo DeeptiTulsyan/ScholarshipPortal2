@@ -3,6 +3,8 @@ package com.example.scholarshipportal.repository;
 import com.example.scholarshipportal.model.Application;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -15,7 +17,9 @@ public class AdminRepository {
     @Autowired
     private DataSource dataSource;
 
-    // Fetch all applications with joined student and scholarship info
+    private static final Logger logger = LoggerFactory.getLogger(AdminRepository.class);
+
+    // Fetch all applications
     public List<Application> findAllApplications() {
         List<Application> list = new ArrayList<>();
         String sql = "SELECT * FROM applications ORDER BY id DESC";
@@ -34,8 +38,11 @@ public class AdminRepository {
                 app.setStatus(rs.getString("status"));
                 list.add(app);
             }
+
+            logger.info("Fetched {} applications from database.", list.size());
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error while fetching all applications", e);
         }
         return list;
     }
@@ -47,11 +54,16 @@ public class AdminRepository {
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, status);
             ps.setInt(2, id);
-            return ps.executeUpdate() > 0;
+            boolean success = ps.executeUpdate() > 0;
+            if (success) {
+                logger.info("Updated status of application ID {} to {}", id, status);
+            } else {
+                logger.warn("No application found with ID {}", id);
+            }
+            return success;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("Error while updating application status for ID: {}", id, e);
             return false;
         }
     }
 }
-
