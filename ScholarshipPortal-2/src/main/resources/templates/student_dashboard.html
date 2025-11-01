@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 30px;
+        }
+        table {
+            margin: 30px auto;
+            width: 80%;
+            border-collapse: collapse;
+            box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+            background-color: white;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 14px;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h2>Available Scholarships</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Scholarship Name</th>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Eligibility</th>
+        </tr>
+        <tr th:each="s : ${scholarships}">
+            <td th:text="${s.id}"></td>
+            <td th:text="${s.name}"></td>
+            <td th:text="${s.description}"></td>
+            <td th:text="${s.amount}"></td>
+            <td th:text="${s.eligibility}"></td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Apply for Scholarship</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #e0f2fe, #f5f3ff);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+    }
+
+    .apply-box {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      padding: 40px;
+      width: 420px;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      color: #1e3a8a;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 26px;
+    }
+
+    label {
+      display: block;
+      color: #1e3a8a;
+      font-weight: 600;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      transition: border-color 0.2s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 2px rgba(37,99,235,0.1);
+    }
+
+    .readonly-field {
+      display: inline-block;
+      background: #f1f5f9;
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: #374151;
+      font-size: 15px;
+      margin-bottom: 18px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: #1e3a8a;
+      transform: translateY(-2px);
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 16px;
+      font-size: 14px;
+      color: #2563eb;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover {
+      color: #1e3a8a;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="apply-box">
+    <h2>Apply for Scholarship</h2>
+
+    <form action="#" th:action="@{/student/apply}" th:object="${application}" method="post">
+      <input type="hidden" name="scholarshipId" th:value="${scholarship.id}" />
+      <input type="hidden" name="scholarshipName" th:value="${scholarship.name}" />
+
+      <label>Scholarship Name:</label>
+      <div class="readonly-field" th:text="${scholarship.name}"></div>
+
+      <label>Your Name:</label>
+      <input type="text" name="studentName" placeholder="Enter your full name" required/>
+
+      <label>Your Email:</label>
+      <input type="email" name="studentEmail" placeholder="Enter your email" required/>
+
+      <button type="submit">Submit Application</button>
+    </form>
+
+    <a th:href="@{/student/home}" class="back-link">← Back to Dashboard</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Dashboard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #dbeafe, #ede9fe);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 20px;
+    }
+
+    .dashboard-container {
+      width: 90%;
+      max-width: 900px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 30px 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    h2 {
+      color: #1e3a8a;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+      letter-spacing: 0.5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 14px 12px;
+      text-align: left;
+    }
+
+    th {
+      background: #1e40af;
+      color: #fff;
+      text-transform: uppercase;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    tr:nth-child(even) {
+      background: #f3f4f6;
+    }
+
+    tr:hover {
+      background: #e0e7ff;
+      transition: background 0.2s ease-in-out;
+    }
+
+    td a {
+      background: #2563eb;
+      color: #fff;
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    td a:hover {
+      background: #1e3a8a;
+      transform: scale(1.05);
+    }
+
+    .status-section {
+      background: #f9fafb;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+
+    .status-section label {
+      display: block;
+      font-weight: 600;
+      color: #1e3a8a;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    .status-section input {
+      padding: 10px;
+      width: 80%;
+      max-width: 320px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      font-size: 14px;
+      transition: border-color 0.2s ease;
+    }
+
+    .status-section input:focus {
+      outline: none;
+      border-color: #2563eb;
+    }
+
+    .status-section button {
+      background: #1e69de;
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .status-section button:hover {
+      background: #174bb8;
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 13px;
+      color: #555;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <h2>🎓 Welcome to Student Dashboard</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Scholarship Name</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="s : ${scholarships}">
+          <td th:text="${s.id}"></td>
+          <td th:text="${s.name}"></td>
+          <td th:text="${s.description}"></td>
+          <td><a th:href="@{'/student/apply/' + ${s.id}}">Apply</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="status-section">
+      <form th:action="@{/student/status}" method="get">
+        <label for="email">Check Scholarship Application Status</label>
+        <input type="email" name="email" id="email" placeholder="Enter your email" required>
+        <br>
+        <button type="submit">Check Status</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>© 2025 Student Scholarship Portal | Built with 💙 using Spring Boot + Thymeleaf</footer>
+</body>
+</html>

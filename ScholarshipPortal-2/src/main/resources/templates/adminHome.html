@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Home</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #e3f2fd, #ede7f6);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .wrap {
+      background: #ffffff;
+      padding: 50px 60px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 500px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h1 {
+      color: #1e3c72;
+      font-size: 2rem;
+      margin-bottom: 10px;
+      text-shadow: 1px 1px 2px #90caf9;
+    }
+
+    p {
+      color: #37474f;
+      font-size: 1.1rem;
+      margin: 10px 0 25px;
+    }
+
+    a {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 28px;
+      border-radius: 25px;
+      background: linear-gradient(135deg, #2196f3, #21cbf3);
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      text-transform: uppercase;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    a:hover {
+      background: linear-gradient(135deg, #1976d2, #00acc1);
+      transform: scale(1.08);
+      box-shadow: 0 6px 18px rgba(33,150,243,0.3);
+    }
+
+    .secondary {
+      background: linear-gradient(135deg, #90a4ae, #cfd8dc);
+      color: #263238;
+    }
+
+    .secondary:hover {
+      background: linear-gradient(135deg, #78909c, #b0bec5);
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>👩‍💼 Admin Dashboard</h1>
+    <p>Welcome, Admin — manage scholarship applications efficiently.</p>
+    <a th:href="@{/admin/applications}">View Applications</a>
+    <a th:href="@{/}" class="secondary">Back to Landing</a>
+  </div>
+</body>
+</html>

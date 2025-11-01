@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>All Applications</title>
+  <style>
+    body { font-family: Segoe UI, sans-serif; background: #fffaf6; padding: 30px; }
+    h1 { color: #333; text-align: center; }
+    table { width: 90%; margin: 30px auto; border-collapse: collapse; background: white; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    th, td { padding: 12px 15px; border: 1px solid #ddd; text-align: left; }
+    th { background-color: #f1a661; color: white; }
+    tr:nth-child(even) { background-color: #f9f9f9; }
+    .btn { border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; }
+    .approve { background: #4CAF50; color: white; }
+    .reject { background: #e74c3c; color: white; }
+    .back { display: block; margin: 20px auto; text-align: center; color: #f57c00; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <h1>All Scholarship Applications</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Student Name</th>
+        <th>Email</th>
+        <th>Scholarship</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="app : ${applications}">
+        <td th:text="${app.id}"></td>
+        <td th:text="${app.studentName}"></td>
+        <td th:text="${app.studentEmail}"></td>
+        <td th:text="${app.scholarshipName}"></td>
+        <td th:text="${app.status}"></td>
+        <td>
+          <form th:action="@{'/admin/approve/' + ${app.id}}" method="post" style="display:inline;">
+            <button type="submit" class="btn approve">Approve</button>
+          </form>
+          <form th:action="@{'/admin/reject/' + ${app.id}}" method="post" style="display:inline;">
+            <button type="submit" class="btn reject">Reject</button>
+          </form>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <a href="/admin/home" class="back">← Back to Dashboard</a>
+</body>
+</html>

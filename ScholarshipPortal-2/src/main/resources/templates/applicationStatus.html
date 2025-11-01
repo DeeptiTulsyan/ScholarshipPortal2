@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Application Status</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #e0f2fe, #ede9fe);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      background: #fff;
+      padding: 35px 45px;
+      border-radius: 14px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      width: 85%;
+      max-width: 900px;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      text-align: center;
+      color: #1e3a8a;
+      margin-bottom: 25px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      background: #1e40af;
+      color: #fff;
+      text-transform: uppercase;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    tr:nth-child(even) {
+      background: #f9fafb;
+    }
+
+    td {
+      font-size: 14px;
+      color: #374151;
+    }
+
+    .status {
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 8px;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .status.Pending {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .status.Approved {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status.Rejected {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .empty {
+      text-align: center;
+      color: #555;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    a {
+      display: inline-block;
+      background: #2563eb;
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-align: center;
+      margin-left: calc(50% - 75px);
+    }
+
+    a:hover {
+      background: #1e3a8a;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Your Scholarship Application Status</h2>
+
+    <!-- If there are no applications -->
+    <div th:if="${#lists.isEmpty(applications)}" class="empty">
+      <p>No applications found for the entered email.</p>
+    </div>
+
+    <!-- If applications exist -->
+    <div th:if="${!#lists.isEmpty(applications)}">
+      <table>
+        <thead>
+          <tr>
+            <th>Application ID</th>
+            <th>Scholarship Name</th>
+            <th>Student Name</th>
+            <th>Email</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="app : ${applications}">
+            <td th:text="${app.id}"></td>
+            <td th:text="${app.scholarshipName}"></td>
+            <td th:text="${app.studentName}"></td>
+            <td th:text="${app.studentEmail}"></td>
+            <td>
+              <span class="status" th:text="${app.status}" th:classappend="${app.status}"></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <a th:href="@{/student/home}">Back to Dashboard</a>
+  </div>
+</body>
+</html>
